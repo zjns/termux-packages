@@ -1,9 +1,9 @@
 --- a/build/config/clang/clang.gni
 +++ b/build/config/clang/clang.gni
-@@ -35,6 +35,9 @@
-   # Set to true to enable output of ThinLTO index and import files used for
-   # creating a Chromium MLGO corpus in the ThinLTO case.
-   lld_emit_indexes_and_imports = false
+@@ -64,6 +64,9 @@
+       target_cpu == "x64" &&
+       # reclient doesn't handle headers in modulemap config.
+       !use_reclient
 +
 +  custom_toolchain_clang_base_path = ""
 +  custom_toolchain_clang_version = ""
@@ -12,19 +12,28 @@
  # We don't really need to collect a corpus for the host tools, just for the target.
 --- a/build/config/clang/BUILD.gn
 +++ b/build/config/clang/BUILD.gn
-@@ -5,6 +5,8 @@
- import("//build/config/rust.gni")
- import("clang.gni")
-
+@@ -12,6 +12,8 @@
+   use_cros_sysroot_libs = false
+ }
+ 
 +import("//v8/gni/snapshot_toolchain.gni")
 +
  if (is_ios) {
-   import("//build/config/ios/config.gni")  # For `target_environment`
- }
-@@ -236,6 +236,20 @@
+   # For `target_environment` and `target_platform`.
+   import("//build/config/apple/mobile_config.gni")
+@@ -159,6 +161,7
+       _suffix = ""
+       _ext = "a"
+ 
++      _clang_lib_dir = "$clang_base_path/lib/clang/$clang_version/lib"
+       if (is_win) {
+         _dir = "windows"
+         _prefix = ""
+@@ -221,7 +224,20
          assert(false)  # Unhandled target platform
        }
  
+-      _clang_lib_dir = "$clang_base_path/lib/clang/$clang_version/lib"
 +      if (is_a_target_toolchain && current_toolchain != v8_snapshot_toolchain) {
 +        _dir = "linux"
 +        _clang_lib_dir = "$custom_toolchain_clang_base_path/lib/clang/$custom_toolchain_clang_version/lib"
@@ -41,4 +50,4 @@
 +
        _lib_file = "${_prefix}clang_rt.${_libname}${_suffix}.${_ext}"
        libs = [ "$_clang_lib_dir/$_dir/$_lib_file" ]
- 
+     }
