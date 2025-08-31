@@ -2,8 +2,8 @@ TERMUX_PKG_HOMEPAGE=https://elinux.org/Android_aapt
 TERMUX_PKG_DESCRIPTION="Android Asset Packaging Tool"
 TERMUX_PKG_LICENSE="Apache-2.0"
 TERMUX_PKG_MAINTAINER="@termux"
-_TAG_VERSION=13.0.0
-_TAG_REVISION=6
+_TAG_VERSION=16.0.0
+_TAG_REVISION=2
 TERMUX_PKG_VERSION=${_TAG_VERSION}.${_TAG_REVISION}
 TERMUX_PKG_REVISION=19
 TERMUX_PKG_SRCURL=(https://android.googlesource.com/platform/frameworks/base
@@ -235,7 +235,7 @@ termux_step_make_install() {
 	rm -rf android-jar
 	mkdir android-jar
 	cd android-jar
-	cp $ANDROID_HOME/platforms/android-35/android.jar .
+	cp $ANDROID_HOME/platforms/android-36/android.jar .
 	unzip -q android.jar
 	mkdir -p $TERMUX_PREFIX/share/aapt
 	jar cfM $TERMUX_PREFIX/share/aapt/android.jar AndroidManifest.xml resources.arsc
