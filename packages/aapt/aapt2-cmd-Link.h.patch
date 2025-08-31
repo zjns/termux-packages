@@ -5,9 +5,9 @@
    std::unordered_set<std::string> extensions_to_not_compress;
    std::optional<std::regex> regex_to_not_compress;
 +  std::optional<std::string> extensions_to_not_compress_path;
-
-   // Static lib options.
-   bool no_static_lib_packages = false;
+   bool no_compress_fonts = false;
+   FeatureFlagValues feature_flag_values;
+ 
 @@ -279,6 +280,8 @@ class LinkCommand : public Command {
                      &options_.manifest_fixer_options.rename_overlay_category);
      AddOptionalFlagList("-0", "File suffix not to compress.",

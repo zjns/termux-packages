@@ -6,7 +6,7 @@
          || (!options_.allow_reserved_package_id && package_id_int < kAppPackageId)) {
 -      context.GetDiagnostics()->Error(
 +      context.GetDiagnostics()->Warn(
-           DiagMessage() << StringPrintf(
+           android::DiagMessage() << StringPrintf(
 -              "invalid package ID 0x%02x. Must be in the range 0x7f-0xff.", package_id_int));
 +              "invalid package ID 0x%02x. Must be in the range 0x7f-0xff. Ignoring...", package_id_int));
        return 1;
@@ -22,7 +22,7 @@
 +
 +    if (extensionsFile.fail()) {
 +      context.GetDiagnostics()->Error(
-+        DiagMessage() << "could not open extensions file "
++        android::DiagMessage() << "could not open extensions file "
 +          << options_.extensions_to_not_compress_path.value()
 +          << " for reading");
 +      return 1;

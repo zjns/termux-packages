@@ -4,7 +4,7 @@
    const bool validate = validation_ == Validation::kEnabled;
    const Source source = res.value ? res.value->GetSource() : Source{};
    if (validate && !res.allow_mangled && !IsValidResourceEntryName(res.name.entry)) {
--    diag->Error(DiagMessage(source)
+-    diag->Error(android::DiagMessage(source)
 -                << "resource '" << res.name << "' has invalid entry name '" << res.name.entry);
 -    return false;
 +    // Apktool: Allow invalid entry names.
